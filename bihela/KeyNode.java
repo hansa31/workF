@@ -5,6 +5,12 @@ class KeyNode {
     private int x;
     private int y;
 
+    public KeyNode(char k, int X, int Y){
+        key = k;
+        x = X;
+        y = Y;
+    }
+
     //setters
     public void setKey(char key){
         this.key = key;
