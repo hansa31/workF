@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Scanner;
 
 class keyMeUp{
 
@@ -32,6 +34,7 @@ class keyMeUp{
 
             KeyNode [][] matrix = null;
 
+            //creating the keyboard matirx
             try {
                 matrix = create2DIntMatrixFromFile(keyFile);
             } catch (Exception e) {
@@ -61,7 +64,72 @@ class keyMeUp{
 
         //interactive mode
         }else if (args[0].equals("-i")){
+            System.out.println("1 - Load keyboard file");
+            System.out.println("2 - Node operations (find, insert, delete, update)");
+            System.out.println("3 - Edge operations (find, insert, delete, update)");
+            System.out.println("4 - Display graph");
+            System.out.println("5 - Display graph information");
+            System.out.println("6 - Enter string for finding path");
+            System.out.println("7 - Generate paths");
+            System.out.println("8 - Display path");
+            System.out.println("9 - Save keyboard");
 
+            //variables
+            String keyFile;
+            //String strFile;
+            //String pathFile;
+
+            String str = "";
+            String path = "";
+            KeyNode [][] matrix = null;
+
+            while (true){
+                Scanner sc = new Scanner(System.in);
+                int start = sc.nextInt();
+
+                if (start == 1){
+                    Scanner sc2 = new Scanner(System.in);
+                    keyFile = sc2.nextLine();
+                    System.out.println(keyFile);
+                    
+                    //creating the keyboard matirx
+                    try {
+                        matrix = create2DIntMatrixFromFile(keyFile);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }else if (start ==2){
+                    //TODO
+                }else if (start==3){
+                    //TODO
+                }else if (start==4){
+                    //Display Graph
+                    System.out.println(Arrays.deepToString(matrix));
+                }else if (start==5){
+                    //TODO
+                }else if (start==6){
+                    //enter the string
+                    Scanner sc7 = new Scanner(System.in);
+                    str = sc7.nextLine();
+                }else if (start==7){
+                    if(str.equals("")){
+                        System.out.println("Please enter a string to calculate the path");
+                    }else{
+                        //getting the path
+                        path = getPath(str, matrix);
+                        System.out.println("Path created sucessfully");
+                    }
+                }else if (start==8){
+                    //display path
+                    System.out.println(path);
+                }else if (start==9){
+                    System.out.println("Sucessfully saved the keyboard");
+                }else if(start<1 || start>9){
+                    System.out.println("Wrong Input. Please reffer the manual again");
+                }
+            }
+            
         }
     }
 
@@ -88,7 +156,7 @@ class keyMeUp{
             // Lazy instantiation.
             if (matrix == null) {
                 size = vals.length;
-                matrix = new KeyNode[size][size];
+                matrix = new KeyNode[10][10];
             }
 
             for (int col = 0; col < size; col++) {
@@ -125,6 +193,9 @@ class keyMeUp{
             for(int i=0; i<keyboard.length; i++) {
                 for(int j=0; j<keyboard[i].length; j++) {
                     KeyNode entry = keyboard[i][j];
+                    if(entry == null ){
+                        continue;
+                    }
                     if(c==entry.getKey()){
                         X = entry.getX();
                         Y = entry.getY();
