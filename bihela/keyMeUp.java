@@ -18,6 +18,7 @@ class keyMeUp{
         //just some error handleing
         if (!(args.length == 1 || args.length == 4)){
             System.out.println("Use -i for interactive testing enviromrnt [java keyMeUp -i]\nUse -s for silent mode [java keyMeUp -s keyFile strFile pathFile]");
+            //exit
         } else if (!(args[0].equals("-i") || args[0].equals("-s"))){
             System.out.println("Use -i for interactive testing enviromrnt [java keyMeUp -i]\nUse -s for silent mode [java keyMeUp -s keyFile strFile pathFile]");
         }
@@ -90,22 +91,43 @@ class keyMeUp{
                 if (start == 1){
                     Scanner sc2 = new Scanner(System.in);
                     keyFile = sc2.nextLine();
-                    System.out.println(keyFile);
+                    //System.out.println(keyFile);
                     
                     //creating the keyboard matirx
                     try {
                         matrix = create2DIntMatrixFromFile(keyFile);
+                        System.out.println("Keyboard Entered Sucessfully");
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        System.out.println("Wrong input file");
                     }
 
                 }else if (start ==2){
-                    //TODO
+                    //Node operations
+                    if(matrix==null){
+                        System.out.println("Please configure a keyboard first");
+                    }else{
+                        System.out.println("Enter X and Y values where you wish to enter the new node. (X & Y should be between 0 - 9)");
+                        Scanner sc3 = new Scanner(System.in);
+                        int x = sc3.nextInt();
+                        int y = sc3.nextInt();
+                        System.out.println("Enter the character for the key");
+                        Scanner sc3_2 = new Scanner(System.in);
+                        char c = sc3_2.next().charAt(0);
+                        KeyNode newNode = new KeyNode(c, x, y);
+                        matrix[x][y] = newNode;
+                        System.out.println("Keyboard Updated Sucessfully");
+                    }
                 }else if (start==3){
                     //TODO
                 }else if (start==4){
                     //Display Graph
-                    System.out.println(Arrays.deepToString(matrix));
+                    //System.out.println(Arrays.deepToString(matrix));
+                    if(matrix==null){
+                        System.out.println("Please configure the keyboard");
+                    }else{
+                        displayKeyboard(matrix);
+                    }
                 }else if (start==5){
                     //TODO
                 }else if (start==6){
@@ -245,7 +267,24 @@ class keyMeUp{
         return path;
     }
     
+    //function to display the graph
+    private static void displayKeyboard(KeyNode[][] keyboard){
 
+        for(int i=0; i<keyboard.length; i++) {
+            System.out.println();
+            for(int j=0; j<keyboard[i].length; j++) {
+                KeyNode entry = keyboard[i][j];
+                if(entry == null ){
+                    System.out.print("-*-");
+                }else{
+                    System.out.print("-"+entry.getKey()+"-");
+                }
+                
+            }
+        }
+        System.out.println();
+
+    }
 
 
 }
