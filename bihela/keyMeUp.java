@@ -69,7 +69,7 @@ class keyMeUp{
             System.out.println("2 - Node operations (find, insert, delete, update)");
             System.out.println("3 - Edge operations (find, insert, delete, update)");
             System.out.println("4 - Display graph");
-            System.out.println("5 - Display graph information");
+            System.out.println("5 - Display graph information"); 
             System.out.println("6 - Enter string for finding path");
             System.out.println("7 - Generate paths");
             System.out.println("8 - Display path");
