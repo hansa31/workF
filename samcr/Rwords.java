@@ -1,12 +1,12 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
-import java.util.StringTokenizer;
+
 
 public class Rwords {
     public static void main(String[] args) throws FileNotFoundException{
@@ -31,7 +31,7 @@ public class Rwords {
         Collections.sort(RW);
 
         //printing the linked list for debugging (comment out this part)
-        System.out.println(" ");
+        //System.out.println(" ");
 
         Iterator<String> itr = RW.iterator();
         while(itr.hasNext()){
@@ -58,7 +58,7 @@ public class Rwords {
             //get the words from a line
             words = getWords(line);
 
-            System.out.println(Arrays.toString(words));
+            //System.out.println(Arrays.toString(words));
             //System.out.println(words.length);
 
             //continue if words is empty
@@ -73,11 +73,21 @@ public class Rwords {
                 if (s.equals(null)){
                     continue;
                 }
-                System.out.println(s.charAt(0));
+                //System.out.println(s.charAt(0));
                 if(isID(s)){
                     if(isInRW(s,RW)){
                         Node n = new Node(s,count);
-                        ID.add(n);
+                        
+                        //check whether it is a duplicate node
+                         
+                        if(!(ID.contains(n))){
+                            //n.printNode();
+                            ID.add(n);
+                        }
+                        
+                        
+
+                        
                     }
                 }
             }
@@ -88,6 +98,9 @@ public class Rwords {
             // add the strings to the linked list
             //RW.add(s);
         }
+
+        //sort the linked list
+        Collections.sort(ID,Comparator.comparing(Node::getid));
 
         Iterator<Node> itr2 = ID.iterator();
         while(itr2.hasNext()){
