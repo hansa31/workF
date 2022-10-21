@@ -41,10 +41,19 @@ int mdadm_mount(void) {
     return -1;
   }
 
-  //
+  /*
+  JBOD_MOUNT: mount all disks in the JBOD and make them ready to serve commands. This is the first
+  command that should be called on the JBOD before issuing any other commands; all commands before
+  it will fail. When the command field of op is set to this command, all other fields in op 
+  are ignored by
+  the JBOD driver. Similarly, the block argument passed to jbod_operation can be NULL. 
+  */
+
+  // if mount is unsucessfull return failure
   if (jbod_operation((JBOD_MOUNT<<12),NULL)==-1){
     return -1;
   }
+
   //mount successful
   is_mounted = 1;
   return 1;
@@ -53,12 +62,16 @@ int mdadm_mount(void) {
 
 int mdadm_unmount(void) {
 
+  // if is_mounted is 1 return failure.
   if(!is_mounted){
     return -1;
   }
+
+  //if unmount is unsuceccfull return -1
   if(jbod_operation((JBOD_UNMOUNT<<12),NULL)==-1){
     return -1;
   }
+  
   //unmount successful
   is_mounted = 0;
   return 1;
