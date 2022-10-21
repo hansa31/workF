@@ -3,6 +3,17 @@ public class Node {
     private String id;
     private int line;
 
+    //constructor
+    public Node(String i, int l){
+        id = i;
+        line = l;
+    }
+
+    //method to print a Node
+    public void printNode(){
+        System.out.println("identifier: "+id+" "+"line: "+line);
+    }
+
     //getters
     public String getid(){
         return this.id;

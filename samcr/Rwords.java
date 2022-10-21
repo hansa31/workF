@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -43,6 +44,9 @@ public class Rwords {
         //get the count
         int count = 1;
 
+        //array to hold words
+        String[] words;
+
         while(scan2.hasNext()){
 
             //read line by line
@@ -51,11 +55,43 @@ public class Rwords {
             //System.out.print(count+"    ");
             //System.out.println(line);
 
-            getWords(line);
+            //get the words from a line
+            words = getWords(line);
+
+            System.out.println(Arrays.toString(words));
+            //System.out.println(words.length);
+
+            //continue if words is empty
+            if(words.length == 0 || words.length ==1){
+                continue;
+            }
+
+            //check whether it is an identifier and add it to the linked list
+            
+            
+            for (String s : words){
+                if (s.equals(null)){
+                    continue;
+                }
+                System.out.println(s.charAt(0));
+                if(isID(s)){
+                    if(isInRW(s,RW)){
+                        Node n = new Node(s,count);
+                        ID.add(n);
+                    }
+                }
+            }
+            
+            
 
             count++;
             // add the strings to the linked list
             //RW.add(s);
+        }
+
+        Iterator<Node> itr2 = ID.iterator();
+        while(itr2.hasNext()){
+            itr2.next().printNode();
         }
 
 
@@ -78,6 +114,13 @@ public class Rwords {
         if(s.isJavaIdentifierStart())
         */
 
+        if(str.equals(null)){
+            return false;
+        }
+
+
+
+
         // If first character is invalid
         if (!((str.charAt(0) >= 'a' && str.charAt(0) <= 'z')
             || (str.charAt(0)>= 'A' && str.charAt(0) <= 'Z')
@@ -99,7 +142,7 @@ public class Rwords {
     }
 
     //get the words from the given line
-    public static void getWords(String str){
+    public static String[] getWords(String str){
         StringBuilder sbuild = new StringBuilder(str);
 
         // Traverse the string
@@ -120,9 +163,26 @@ public class Rwords {
             
         }
 
-        System.out.println(sbuild.toString());
+        String str2 = sbuild.toString();
+
+        //System.out.println(sbuild.toString());
+
+        //convert the line to an array of words
+        String[] words = str2.split("\\W+");
+
+        //System.out.println(Arrays.toString(words));
+        for (int i =0 ; i< words.length;i++) {
+            String s = words[i];
+
+            if(s.length()==0){
+                words[i]=s.replace("","#");
+                //System.out.println("XXX"+s+"XXXX");
+            }
+        }
+
+        return words;
         
-        //develop it further
+        
 
     }
 
